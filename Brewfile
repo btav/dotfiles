@@ -13,7 +13,7 @@ brew "zsh-syntax-highlighting"
 
 brew "node"
 brew "nvm"
-brew "oven-sh/bun/bun"
+brew "bun"
 
 cask "ghostty"
 cask "zed"
