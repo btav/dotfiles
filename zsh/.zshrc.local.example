@@ -1,0 +1,7 @@
+# Machine-specific zsh additions live here.
+# This file is sourced from .zshrc if present, but is gitignored.
+# Copy to ~/.zshrc.local and edit:
+#
+#   cp ~/code/dotfiles/zsh/.zshrc.local.example ~/.zshrc.local
+#
+

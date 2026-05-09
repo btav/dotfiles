@@ -1,0 +1,19 @@
+# Local-only zsh additions (sourced if present)
+zsh/.zshrc.local
+**/*.local
+
+# Anything claude-private (defensive — claude package isn't stowed by default)
+**/.claude/settings.local.json
+**/.claude/projects/
+**/.claude/shell-snapshots/
+**/.claude/todos/
+**/.claude/statsig/
+
+# Secrets that should never end up here
+**/.env
+**/.env.*
+*.key
+*.pem
+
+# OS noise
+.DS_Store

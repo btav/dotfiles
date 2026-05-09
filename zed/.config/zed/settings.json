@@ -1,0 +1,101 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "proxy": "",
+  "disable_ai": false,
+  "bottom_dock_layout": "contained",
+  "title_bar": {
+    "show_menus": false,
+    "show_user_picture": false,
+    "show_user_menu": false,
+    "show_sign_in": false,
+    "show_onboarding_banner": true,
+    "show_project_items": true,
+    "show_branch_status_icon": true
+  },
+  "status_bar": {
+    "cursor_position_button": true
+  },
+  "debugger": {
+    "button": false
+  },
+  "diagnostics": {
+    "button": true
+  },
+  "tab_size": 2,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "cli_default_open_behavior": "new_window",
+  "project_panel": {
+    "sort_mode": "files_first",
+    "hide_hidden": false,
+    "hide_root": false,
+    "git_status_indicator": true,
+    "diagnostic_badges": false,
+    "git_status": true,
+    "folder_icons": true,
+    "file_icons": true,
+    "entry_spacing": "comfortable",
+    "hide_gitignore": false,
+    "default_width": 240.0,
+    "button": true,
+    "dock": "left"
+  },
+  "outline_panel": {
+    "file_icons": true,
+    "button": false,
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "button": false,
+    "dock": "left"
+  },
+  "agent": {
+    "button": false,
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "git_panel": {
+    "button": true,
+    "dock": "left"
+  },
+  "icon_theme": {
+    "mode": "light",
+    "light": "Catppuccin Macchiato",
+    "dark": "Catppuccin Macchiato"
+  },
+  "edit_predictions": {
+    "provider": "copilot"
+  },
+  "terminal": {
+    "toolbar": {
+      "breadcrumbs": false
+    },
+    "copy_on_select": true,
+    "show_count_badge": false,
+    "button": true,
+    "dock": "right"
+  },
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "base_keymap": "VSCode",
+  "buffer_font_family": "Jetbrains mono",
+  "vim_mode": true,
+  "ui_font_size": 18.0,
+  "buffer_font_size": 16.0,
+  "theme": {
+    "mode": "light",
+    "light": "GitHub Light",
+    "dark": "GitHub Dark",
+  },
+}

@@ -1,0 +1,26 @@
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = true
+window-padding-balance = true
+background-opacity = .9
+shell-integration = zsh
+
+#theme = Monokai Pro Spectrum
+#theme = Flexoki Light
+theme = GitHub Light Default 
+
+
+bold-is-bright = true
+
+font-size = 16
+#font-thicken = true
+font-family = JetBrainsMono Nerd Font
+
+macos-titlebar-style = transparent
+macos-titlebar-proxy-icon = hidden
+
+# Set the cursor color to a specific hex value (e.g., a shade of green)
+cursor-color = #a6d189
+
+# Enable or disable blinking
+cursor-style-blink = true

@@ -1,0 +1,10 @@
+^/README\.md$
+^/Brewfile$
+^/install\.sh$
+^/scripts$
+^/skills$
+^/\.git
+^/\.gitignore$
+^/\.gitmodules$
+^/\.stow-local-ignore$
+\.example$
