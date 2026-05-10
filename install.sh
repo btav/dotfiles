@@ -29,6 +29,23 @@ fi
 step "brew bundle" "$(tilde "$DOTFILES")/Brewfile"
 run "brew bundle --file='$DOTFILES/Brewfile' --quiet"
 
+# Rust toolchain (brew ships rustup-init only; nothing usable until it runs once)
+if command -v rustup >/dev/null 2>&1; then
+  step "Rust" "toolchain already installed"
+else
+  step "Rust" "bootstrapping stable toolchain"
+  run "rustup-init -y --no-modify-path --default-toolchain stable >/dev/null"
+fi
+
+# Python via uv (--default places `python`/`python3` shims in ~/.local/bin)
+PY_VER="3.13"
+if uv python list --only-installed 2>/dev/null | grep -q "cpython-${PY_VER}"; then
+  step "Python" "$PY_VER already installed"
+else
+  step "Python" "installing $PY_VER as default"
+  run "uv python install --default $PY_VER"
+fi
+
 # oh-my-zsh
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
   step "oh-my-zsh" "already installed"

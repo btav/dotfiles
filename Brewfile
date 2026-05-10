@@ -16,6 +16,10 @@ brew "node"
 brew "nvm"
 brew "bun"
 
+brew "go"
+brew "rustup"
+brew "uv"
+
 cask "ghostty"
 cask "zed"
 cask "claude-code"

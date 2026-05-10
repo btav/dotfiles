@@ -38,7 +38,13 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 
-# Personal bin
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# Go
+export PATH="$HOME/go/bin:$PATH"
+
+# Personal bin (also where `uv tool install` shims land)
 export PATH="$HOME/.local/bin:$PATH"
 
 # Claude Code settings

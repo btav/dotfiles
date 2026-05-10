@@ -24,8 +24,14 @@ btav macOS dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 **CLI tools** (Homebrew)
 
 - `gh`, `jq`, `ripgrep`, `bat`, `eza`, `fzf`, `zoxide`, `git-delta`
-- `node`, `nvm`, `bun`
 - `stow` — the orchestrator that symlinks everything else
+
+**Languages** (Homebrew, version managers — install runtimes per-machine)
+
+- JavaScript / TypeScript — `node`, `nvm`, `bun`
+- Rust — `rustup` (bootstrapped to stable on first `install.sh` run; `cargo`/`rustc` land in `~/.cargo/bin`)
+- Go — `go` (`go install` binaries land in `~/go/bin`)
+- Python — `uv` (Python 3.13 bootstrapped on first `install.sh` run as the default; `python`/`python3` shims land in `~/.local/bin`. Tools with `uv tool install <pkg>`.)
 
 **Git**
 
