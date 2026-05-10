@@ -1,26 +1,39 @@
 # dotfiles
 
-btav macOS dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/)
+btav macOS dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 
 ## What's in here
 
-**Stow packages** (symlinked into `~`):
+**AI coding agents**
 
-- `zsh/` → `~/.zshrc`, `~/.zshenv`
-- `vim/` → `~/.vimrc`
-- `zed/` → `~/.config/zed/settings.json`
-- `ghostty/` → `~/.config/ghostty/config`
-- `git/` → `~/.config/git/delta.gitconfig` (included from your local `~/.gitconfig`)
+- [Claude Code](https://claude.com/claude-code) (Homebrew cask)
+- [Codex CLI](https://github.com/openai/codex) — `@openai/codex` (npm global)
+- [`skills/`](https://github.com/btav/skills) — shared skill library, symlinked into both `~/.claude/skills/` and `~/.codex/skills/` (git submodule)
 
-**Bootstrap**:
+**Apps**
 
-- `Brewfile` — CLI tools, GUI apps, and fonts installed via Homebrew
-- `scripts/install-npm-globals.sh` — npm-global CLIs
-- `install.sh` — idempotent runner that wires everything together
+- [Ghostty](https://ghostty.org/) — terminal (cask + config at `~/.config/ghostty/config`)
+- [Zed](https://zed.dev/) — editor (cask + config at `~/.config/zed/settings.json`)
 
-**Submodule**:
+**Shell**
 
-- `skills/` → [btav/skills](https://github.com/btav/skills); its own `install.sh` links each skill into `~/.claude/skills/` and `~/.codex/skills/`
+- `zsh` with [oh-my-zsh](https://ohmyz.sh/), `zsh-autosuggestions`, `zsh-syntax-highlighting`
+- Configs: `~/.zshrc`, `~/.zshenv` (from `zsh/`)
+- `~/.zshrc.local` for machine-specific overrides (gitignored)
+
+**CLI tools** (Homebrew)
+
+- `gh`, `jq`, `ripgrep`, `bat`, `eza`, `fzf`, `zoxide`, `git-delta`
+- `node`, `nvm`, `bun`
+- `stow` — the orchestrator that symlinks everything else
+
+**Git**
+
+- `git/.config/git/delta.gitconfig` — git-delta pager config, *included from* your existing `~/.gitconfig` so this repo never overwrites identity, signing, or personal aliases
+
+**Fonts**
+
+- JetBrains Mono Nerd Font
 
 ## How to run
 
@@ -32,9 +45,7 @@ cd ~/code/dotfiles
 
 ## Day-to-day
 
-- Edit a config in this repo → it's already symlinked into `~`, so changes take effect immediately.
-- Add a new package: `mkdir -p newtool/.config/newtool && stow --no-folding newtool`.
-- Re-stow after adding files: `stow --no-folding --restow zsh`.
+- Re-stow after adding files to a package: `stow --no-folding --restow zsh`.
 - Pull skills updates: `git submodule update --remote skills`.
 
 ## Local overrides
