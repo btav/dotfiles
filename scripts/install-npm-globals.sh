@@ -8,6 +8,8 @@ fi
 
 PACKAGES=(
   "@openai/codex"
+  "@google/gemini-cli"
+  "pnpm"
 )
 
 for pkg in "${PACKAGES[@]}"; do

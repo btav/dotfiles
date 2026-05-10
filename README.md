@@ -8,6 +8,7 @@ btav macOS dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 
 - [Claude Code](https://claude.com/claude-code) (Homebrew cask)
 - [Codex CLI](https://github.com/openai/codex) — `@openai/codex` (npm global)
+- [Gemini CLI](https://github.com/google-gemini/gemini-cli) — `@google/gemini-cli` (npm global)
 - [`skills/`](https://github.com/btav/skills) — shared skill library, symlinked into both `~/.claude/skills/` and `~/.codex/skills/` (git submodule)
 
 **Apps**
@@ -28,7 +29,7 @@ btav macOS dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 
 **Languages** (Homebrew, version managers — install runtimes per-machine)
 
-- JavaScript / TypeScript — `node`, `nvm`, `bun`
+- JavaScript / TypeScript — `node`, `nvm`, `bun`, `pnpm`
 - Rust — `rustup` (bootstrapped to stable on first `install.sh` run; `cargo`/`rustc` land in `~/.cargo/bin`)
 - Go — `go` (`go install` binaries land in `~/go/bin`)
 - Python — `uv` (Python 3.13 bootstrapped on first `install.sh` run as the default; `python`/`python3` shims land in `~/.local/bin`. Tools with `uv tool install <pkg>`.)

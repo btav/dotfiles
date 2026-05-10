@@ -101,7 +101,7 @@ skills_args=()
 run "'$DOTFILES/skills/install.sh' ${skills_args[*]:-} | sed 's/^/    /'"
 
 # npm globals
-step "npm globals" "@openai/codex"
+step "npm globals"
 run "'$DOTFILES/scripts/install-npm-globals.sh' | sed 's/^/    /'"
 
 printf '\n\033[1;32mDone.\033[0m\n'
