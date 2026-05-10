@@ -7,7 +7,7 @@ shell-integration = zsh
 
 #theme = Monokai Pro Spectrum
 #theme = Flexoki Light
-theme = GitHub Light Default 
+theme = light:GitHub Light Default,dark:GitHub Dark Default
 
 
 bold-is-bright = true
@@ -20,7 +20,9 @@ macos-titlebar-style = transparent
 macos-titlebar-proxy-icon = hidden
 
 # Set the cursor color to a specific hex value (e.g., a shade of green)
-cursor-color = #a6d189
+cursor-color = #000000
+cursor-opacity = 1.0
+cursor-style = block
 
 # Enable or disable blinking
-cursor-style-blink = true
+cursor-style-blink = false
