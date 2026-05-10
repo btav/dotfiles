@@ -2,12 +2,12 @@ clipboard-read = allow
 clipboard-write = allow
 copy-on-select = true
 window-padding-balance = true
-background-opacity = .9
+background-opacity = .95
 shell-integration = zsh
 
 #theme = Monokai Pro Spectrum
 #theme = Flexoki Light
-theme = light:GitHub Light Default,dark:GitHub Dark Default
+theme = light:GitHub Light Default,dark:GitHub Dark Dimmed
 
 
 bold-is-bright = true
