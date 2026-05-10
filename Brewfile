@@ -8,6 +8,7 @@ brew "bat"
 brew "eza"
 brew "fzf"
 brew "zoxide"
+brew "git-delta"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 

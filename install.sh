@@ -6,7 +6,8 @@ DRY_RUN=0
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
-STOW_PKGS=(zsh vim zed ghostty)
+STOW_PKGS=(zsh vim zed ghostty git)
+GIT_DELTA_INCLUDE="~/.config/git/delta.gitconfig"
 
 step() { printf '\033[1;34m==>\033[0m %-13s %s\n' "$1" "${2:-}"; }
 sub()  { printf '    %s\n' "$*"; }
@@ -61,6 +62,20 @@ step "Stow" "${STOW_PKGS[*]}"
 for pkg in "${STOW_PKGS[@]}"; do
   run "stow --no-folding --dir='$DOTFILES' --target='$HOME' --restow '$pkg'"
 done
+
+# Git delta config is included from the user's existing ~/.gitconfig so this
+# repo does not take over identity, signing, or personal aliases.
+step "git-delta" "$GIT_DELTA_INCLUDE"
+if git config --global --get-all include.path 2>/dev/null | grep -Fxq "$GIT_DELTA_INCLUDE"; then
+  sub "include already present"
+else
+  if (( DRY_RUN )); then
+    sub "would add include.path $GIT_DELTA_INCLUDE"
+  else
+    git config --global --add include.path "$GIT_DELTA_INCLUDE"
+    sub "added include.path $GIT_DELTA_INCLUDE"
+  fi
+fi
 
 # Skills (delegate)
 step "Skills" "via skills/install.sh"

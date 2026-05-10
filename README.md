@@ -10,6 +10,7 @@ btav macOS dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/)
 - `vim/` → `~/.vimrc`
 - `zed/` → `~/.config/zed/settings.json`
 - `ghostty/` → `~/.config/ghostty/config`
+- `git/` → `~/.config/git/delta.gitconfig` (included from your local `~/.gitconfig`)
 
 **Bootstrap**:
 

@@ -17,6 +17,7 @@ setopt SHARE_HISTORY HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS INC_A
 
 # Aliases
 alias amend="git commit --amend --no-edit"
+alias gd='git diff'
 alias reload='exec zsh'
 
 # Modern CLI swaps (only if installed)
