@@ -19,8 +19,6 @@ font-family = JetBrainsMono Nerd Font
 macos-titlebar-style = transparent
 macos-titlebar-proxy-icon = hidden
 
-# Set the cursor color to a specific hex value (e.g., a shade of green)
-cursor-color = #000000
 cursor-opacity = 1.0
 cursor-style = block
 
