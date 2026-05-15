@@ -9,7 +9,7 @@ fi
 PACKAGES=(
   "@openai/codex"
   "@google/gemini-cli"
-  "pnpm"
+  "pnpm@11"
 )
 
 for pkg in "${PACKAGES[@]}"; do
