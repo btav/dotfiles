@@ -80,6 +80,23 @@ for pkg in "${STOW_PKGS[@]}"; do
   run "stow --no-folding --dir='$DOTFILES' --target='$HOME' --restow '$pkg'"
 done
 
+# Local override stubs (seeded from .example; never overwrites existing files)
+step "Local stubs"
+local_pairs=(
+  "zsh/.zshrc.local.example:$HOME/.zshrc.local"
+  "zsh/.zshenv.local.example:$HOME/.zshenv.local"
+)
+for pair in "${local_pairs[@]}"; do
+  src="$DOTFILES/${pair%%:*}"
+  dst="${pair#*:}"
+  if [[ -e "$dst" ]]; then
+    sub "$(tilde "$dst") exists — leaving alone"
+  else
+    sub "$(tilde "$dst") ← $(tilde "$src")"
+    run "cp '$src' '$dst'"
+  fi
+done
+
 # Git delta config is included from the user's existing ~/.gitconfig so this
 # repo does not take over identity, signing, or personal aliases.
 step "git-delta" "$GIT_DELTA_INCLUDE"
