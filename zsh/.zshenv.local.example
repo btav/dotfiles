@@ -1,0 +1,12 @@
+# Machine-specific env vars and PATH additions live here.
+# Sourced by every shell (interactive + non-interactive) if present, but is gitignored.
+# Copy to ~/.zshenv.local and edit:
+#
+#   cp ~/code/dotfiles/zsh/.zshenv.local.example ~/.zshenv.local
+#
+# Use this for things editors/scripts need to see:
+#   - API keys / tokens
+#   - Per-machine PATH entries (work tools, custom installs)
+#   - Per-machine env vars
+# Interactive-only tweaks (aliases, prompt, plugins) go in ~/.zshrc.local instead.
+
