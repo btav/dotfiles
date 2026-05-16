@@ -9,7 +9,7 @@ btav macOS dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 - [Claude Code](https://claude.com/claude-code) (Homebrew cask)
 - [Codex CLI](https://github.com/openai/codex) — `@openai/codex` (npm global)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli) — `@google/gemini-cli` (npm global)
-- [`skills/`](https://github.com/btav/skills) — shared skill library, symlinked into both `~/.claude/skills/` and `~/.codex/skills/` (git submodule)
+- [`skills/`](https://github.com/btav/skills) — shared skill library, symlinked for all AI coding agents (git submodule)
 
 **Apps**
 
@@ -19,8 +19,9 @@ btav macOS dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 **Shell**
 
 - `zsh` with [oh-my-zsh](https://ohmyz.sh/), `zsh-autosuggestions`, `zsh-syntax-highlighting`
-- Configs: `~/.zshrc`, `~/.zshenv` (from `zsh/`)
-- `~/.zshrc.local` for machine-specific overrides (gitignored)
+- `~/.zshenv` — env vars + PATH (sourced by every shell, so editors/scripts see them)
+- `~/.zshrc` — interactive-only: aliases, prompt, completions, plugins
+- `~/.zshenv.local` and `~/.zshrc.local` for machine-specific overrides (gitignored, seeded from `.example` stubs by `install.sh`)
 
 **CLI tools** (Homebrew)
 
@@ -57,4 +58,9 @@ cd ~/code/dotfiles
 
 ## Local overrides
 
-Anything machine-specific (work secrets, ad-hoc exports) goes in `~/.zshrc.local`. It's gitignored and sourced from `.zshrc` if present. See `zsh/.zshrc.local.example`.
+Machine-specific config is split by scope, mirroring the `.zshenv` / `.zshrc` divide:
+
+- `~/.zshenv.local` — env vars, PATH entries, API keys. Sourced by every shell, so editors and subprocesses see them too.
+- `~/.zshrc.local` — interactive-only: extra aliases, prompt tweaks.
+
+Both are gitignored. `install.sh` seeds them from `zsh/.zshenv.local.example` and `zsh/.zshrc.local.example` on first run and never overwrites existing files.
