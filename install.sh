@@ -29,6 +29,16 @@ fi
 step "brew bundle" "$(tilde "$DOTFILES")/Brewfile"
 run "brew bundle --file='$DOTFILES/Brewfile' --quiet"
 
+# nvm (official installer; ~/.nvm). PROFILE=/dev/null prevents it from
+# editing ~/.zshrc — our stowed .zshrc already sources nvm.
+NVM_VERSION="v0.40.4"
+if [[ -s "$HOME/.nvm/nvm.sh" ]]; then
+  step "nvm" "already installed"
+else
+  step "nvm" "installing $NVM_VERSION"
+  run "PROFILE=/dev/null bash -c 'curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh | bash'"
+fi
+
 # Rust toolchain (brew ships rustup-init only; nothing usable until it runs once)
 if command -v rustup >/dev/null 2>&1; then
   step "Rust" "toolchain already installed"

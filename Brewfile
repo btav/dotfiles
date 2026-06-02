@@ -13,7 +13,6 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 
 brew "node"
-brew "nvm"
 brew "bun"
 
 brew "go"
