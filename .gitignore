@@ -12,6 +12,8 @@ zsh/.zshrc.local
 # Secrets that should never end up here
 **/.env
 **/.env.*
+!**/.env.example
+!**/.env.template
 *.key
 *.pem
 

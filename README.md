@@ -9,6 +9,7 @@ btav macOS dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 - [Claude Code](https://claude.com/claude-code) (Homebrew cask)
 - [Codex CLI](https://github.com/openai/codex) — `@openai/codex` (npm global)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli) — `@google/gemini-cli` (npm global)
+- [Pi Coding Agent](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) — `@earendil-works/pi-coding-agent` (npm global)
 - [`skills/`](https://github.com/btav/skills) — shared skill library, symlinked for all AI coding agents (git submodule)
 
 **Apps**

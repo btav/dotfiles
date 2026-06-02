@@ -121,14 +121,14 @@ else
   fi
 fi
 
+# npm globals (must run before skills so Gemini CLI exists on fresh installs)
+step "npm globals"
+run "'$DOTFILES/scripts/install-npm-globals.sh' | sed 's/^/    /'"
+
 # Skills (delegate)
 step "Skills" "via skills/install.sh"
 skills_args=()
 (( DRY_RUN )) && skills_args+=(--dry-run)
 run "'$DOTFILES/skills/install.sh' ${skills_args[*]:-} | sed 's/^/    /'"
-
-# npm globals
-step "npm globals"
-run "'$DOTFILES/scripts/install-npm-globals.sh' | sed 's/^/    /'"
 
 printf '\n\033[1;32mDone.\033[0m\n'

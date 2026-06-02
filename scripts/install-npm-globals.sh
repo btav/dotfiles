@@ -10,6 +10,7 @@ PACKAGES=(
   "@openai/codex"
   "@google/gemini-cli"
   "pnpm@11"
+  "@earendil-works/pi-coding-agent"
 )
 
 for pkg in "${PACKAGES[@]}"; do

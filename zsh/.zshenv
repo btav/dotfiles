@@ -10,6 +10,13 @@ fi
 # Node Version Manager — variable only; the slow `source nvm.sh` lives in .zshrc
 export NVM_DIR="$HOME/.nvm"
 
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+
 # Bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
