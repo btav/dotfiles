@@ -7,6 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "git": {
+    "inline_blame": {
+      "enabled": true
+    }
+  },
   "proxy": "",
   "disable_ai": false,
   "bottom_dock_layout": "contained",
@@ -96,6 +101,6 @@
   "theme": {
     "mode": "light",
     "light": "GitHub Light",
-    "dark": "GitHub Dark Dimmed",
+    "dark": "Cursor Dark",
   },
 }
