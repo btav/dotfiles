@@ -54,8 +54,11 @@ cd ~/code/dotfiles
 
 ## Day-to-day
 
+- Update Homebrew packages/casks, npm globals, and Rust toolchains: `./update.sh`.
 - Re-stow after adding files to a package: `stow --no-folding --restow zsh`.
 - Pull skills updates: `git submodule update --remote skills`.
+
+`update.sh` does not update git submodules, nvm, or installed Python runtime versions.
 
 ## Local overrides
 

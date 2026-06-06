@@ -7,28 +7,34 @@ if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+path_prepend_once() {
+  local dir="$1"
+  [[ -n "$dir" ]] || return
+  case ":$PATH:" in
+    *":$dir:"*) ;;
+    *) export PATH="$dir:$PATH" ;;
+  esac
+}
+
 # Node Version Manager — variable only; the slow `source nvm.sh` lives in .zshrc
 export NVM_DIR="$HOME/.nvm"
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME/bin:"*) ;;
-  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
-esac
+path_prepend_once "$PNPM_HOME/bin"
 
 # Bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+path_prepend_once "$BUN_INSTALL/bin"
 
 # Rust
-export PATH="$HOME/.cargo/bin:$PATH"
+path_prepend_once "$HOME/.cargo/bin"
 
 # Go
-export PATH="$HOME/go/bin:$PATH"
+path_prepend_once "$HOME/go/bin"
 
 # Personal bin (also where `uv tool install` shims land)
-export PATH="$HOME/.local/bin:$PATH"
+path_prepend_once "$HOME/.local/bin"
 
 # Node V8 compile cache — stores bytecode so repeated `node` invocations
 # (eslint, prettier, tsc, scripts) skip parse+compile on cold start.
