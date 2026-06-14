@@ -109,7 +109,7 @@
   "ui_font_size": 18.0,
   "buffer_font_size": 16.0,
   "theme": {
-    "mode": "dark",
+    "mode": "system",
     "light": "Pierre Light Soft",
     "dark": "Pierre Dark Soft",
   },
