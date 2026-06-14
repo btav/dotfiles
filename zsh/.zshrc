@@ -18,6 +18,34 @@ alias amend="git commit --amend --no-edit"
 alias gd='git diff'
 alias reload='exec zsh'
 
+# Git shortcuts
+alias gs='git status -sb'
+alias gl='git log --oneline -20'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gp='git push'
+alias gpu='git pull'
+alias grb='git rebase -i'
+alias stash='git stash'
+alias pop='git stash pop'
+
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Safety nets
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+# Quick edits
+alias zshrc='${EDITOR:-vim} ~/.zshrc'
+
+# Misc
+alias ports='lsof -iTCP -sTCP:LISTEN -n -P'
+alias ip='curl -s ifconfig.me'
+
 # Modern CLI swaps (only if installed)
 command -v eza >/dev/null && {
   alias l='eza -l --git --icons'
