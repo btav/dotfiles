@@ -13,6 +13,7 @@ brew "zoxide"
 brew "git-delta"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
+brew "btop"
 
 brew "node"
 brew "bun"
