@@ -9,11 +9,21 @@
 {
   "git": {
     "inline_blame": {
-      "enabled": true
-    }
+      "enabled": true,
+    },
   },
   "proxy": "",
   "disable_ai": false,
+  "auto_install_extensions": {
+    "github-theme": true,
+    "pierre-theme": true,
+    "catppuccin-icons": true,
+  },
+  "auto_update_extensions": {
+    "github-theme": true,
+    "pierre-theme": true,
+    "catppuccin-icons": true,
+  },
   "bottom_dock_layout": "contained",
   "title_bar": {
     "show_menus": false,
@@ -22,21 +32,21 @@
     "show_sign_in": false,
     "show_onboarding_banner": true,
     "show_project_items": true,
-    "show_branch_status_icon": true
+    "show_branch_status_icon": true,
   },
   "status_bar": {
-    "cursor_position_button": true
+    "cursor_position_button": true,
   },
   "debugger": {
-    "button": false
+    "button": false,
   },
   "diagnostics": {
-    "button": true
+    "button": true,
   },
   "tab_size": 2,
   "telemetry": {
     "diagnostics": false,
-    "metrics": false
+    "metrics": false,
   },
   "cli_default_open_behavior": "new_window",
   "project_panel": {
@@ -52,55 +62,55 @@
     "hide_gitignore": false,
     "default_width": 240.0,
     "button": true,
-    "dock": "left"
+    "dock": "left",
   },
   "outline_panel": {
     "file_icons": true,
     "button": false,
-    "dock": "left"
+    "dock": "left",
   },
   "collaboration_panel": {
     "button": false,
-    "dock": "left"
+    "dock": "left",
   },
   "agent": {
     "button": false,
     "dock": "right",
     "favorite_models": [],
-    "model_parameters": []
+    "model_parameters": [],
   },
   "git_panel": {
     "button": true,
-    "dock": "left"
+    "dock": "left",
   },
   "icon_theme": {
     "mode": "light",
     "light": "Catppuccin Macchiato",
-    "dark": "Catppuccin Macchiato"
+    "dark": "Catppuccin Macchiato",
   },
   "edit_predictions": {
-    "provider": "copilot"
+    "provider": "ollama",
   },
   "terminal": {
     "toolbar": {
-      "breadcrumbs": false
+      "breadcrumbs": false,
     },
     "copy_on_select": true,
     "show_count_badge": false,
     "button": true,
-    "dock": "right"
+    "dock": "right",
   },
   "session": {
-    "trust_all_worktrees": true
+    "trust_all_worktrees": true,
   },
   "base_keymap": "VSCode",
-  "buffer_font_family": "Jetbrains mono",
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
   "vim_mode": true,
   "ui_font_size": 18.0,
   "buffer_font_size": 16.0,
   "theme": {
-    "mode": "light",
-    "light": "GitHub Light",
-    "dark": "Cursor Dark",
+    "mode": "dark",
+    "light": "Pierre Light Soft",
+    "dark": "Pierre Dark Soft",
   },
 }
