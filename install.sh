@@ -79,6 +79,19 @@ else
   run_remote_script bash "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh" env PROFILE=/dev/null
 fi
 
+# Load nvm into this shell so node/npm are available for later steps
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Node LTS via nvm
+if command -v node >/dev/null 2>&1; then
+  step "Node" "already installed ($(node --version 2>/dev/null))"
+else
+  step "Node" "installing LTS via nvm"
+  run nvm install --lts
+  run nvm alias default lts/*
+fi
+
 # Rust toolchain (brew ships rustup-init only; nothing usable until it runs once)
 if command -v rustup >/dev/null 2>&1; then
   step "Rust" "toolchain already installed"

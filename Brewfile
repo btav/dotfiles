@@ -15,7 +15,6 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 brew "btop"
 
-brew "node"
 brew "bun"
 
 brew "go"
