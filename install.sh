@@ -53,16 +53,34 @@ run_remote_script() {
     "$@" "$shell_bin" -c "$script"
   fi
 }
+brew_bin() {
+  if command -v brew >/dev/null 2>&1; then
+    command -v brew
+  elif [[ -x /opt/homebrew/bin/brew ]]; then
+    printf '%s\n' /opt/homebrew/bin/brew
+  elif [[ -x /usr/local/bin/brew ]]; then
+    printf '%s\n' /usr/local/bin/brew
+  else
+    return 1
+  fi
+}
 
 (( DRY_RUN )) && printf '\033[2m(dry run — no changes will be made)\033[0m\n\n'
 
 # Homebrew
-if command -v brew >/dev/null 2>&1; then
+if BREW_BIN="$(brew_bin)"; then
   step "Homebrew" "already installed"
+  (( DRY_RUN )) || eval "$("$BREW_BIN" shellenv)"
 else
   step "Homebrew" "installing"
   run_remote_script /bin/bash "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
-  (( DRY_RUN )) || eval "$(/opt/homebrew/bin/brew shellenv)"
+  if (( ! DRY_RUN )); then
+    BREW_BIN="$(brew_bin)" || {
+      printf 'error: Homebrew installed, but brew was not found in PATH or a standard prefix\n' >&2
+      exit 1
+    }
+    eval "$("$BREW_BIN" shellenv)"
+  fi
 fi
 
 # Brewfile
@@ -132,7 +150,7 @@ run git -C "$DOTFILES" submodule update --init --recursive --quiet
 
 # Backups (collect first, then report once)
 backed_up=()
-for target in "$HOME/.zshrc" "$HOME/.zshenv" "$HOME/.vimrc" "$HOME/.config/zed/settings.json" "$HOME/.config/ghostty/config"; do
+for target in "$HOME/.zshrc" "$HOME/.zshenv" "$HOME/.vimrc" "$HOME/.config/zed/settings.json" "$HOME/.config/ghostty/config" "$HOME/.config/git/delta.gitconfig"; do
   if [[ -e "$target" && ! -L "$target" ]]; then
     backed_up+=("$(tilde "$target")")
     run mkdir -p "$BACKUP_DIR$(dirname "$target")"

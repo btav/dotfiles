@@ -5,6 +5,8 @@
 # Homebrew (must be first — downstream PATH entries depend on brew-installed binaries)
 if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 path_prepend_once() {

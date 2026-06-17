@@ -68,12 +68,17 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 command -v fzf >/dev/null && source <(fzf --zsh)
 
 # zsh-autosuggestions — gray ghost text from history; right-arrow to accept
-[[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
-  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if command -v brew >/dev/null; then
+  brew_prefix="$(brew --prefix)"
+  [[ -f "$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+    source "$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
 
 # Local overrides (machine-specific, not committed)
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # zsh-syntax-highlighting — colors invalid commands red. MUST be sourced last.
-[[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
-  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ -n "${brew_prefix:-}" ]]; then
+  [[ -f "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+    source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
