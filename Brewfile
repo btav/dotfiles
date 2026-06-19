@@ -1,5 +1,3 @@
-tap "oven-sh/bun"
-
 brew "stow"
 brew "gh"
 brew "jq"
@@ -14,8 +12,6 @@ brew "git-delta"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 brew "btop"
-
-brew "bun"
 
 brew "go"
 brew "rustup"
