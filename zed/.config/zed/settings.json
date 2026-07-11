@@ -110,7 +110,7 @@
   "buffer_font_size": 16.0,
   "theme": {
     "mode": "system",
-    "light": "Pierre Light Soft",
+    "light": "GitHub Light",
     "dark": "Pierre Dark Soft",
   },
 }
