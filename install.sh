@@ -101,13 +101,30 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# Node LTS via nvm
-if command -v node >/dev/null 2>&1; then
-  step "Node" "already installed ($(node --version 2>/dev/null))"
-else
+# Node LTS via nvm. Homebrew may provide a system node, but we still want an
+# nvm-managed default so global npm packages land in the same tree interactive
+# shells use.
+nvm_default_version() {
+  nvm version default 2>/dev/null || true
+}
+
+NVM_DEFAULT_VERSION="$(nvm_default_version)"
+if [[ -z "$NVM_DEFAULT_VERSION" || "$NVM_DEFAULT_VERSION" == "N/A" || "$NVM_DEFAULT_VERSION" == "system" ]]; then
   step "Node" "installing LTS via nvm"
   run nvm install --lts
   run nvm alias default lts/*
+  NVM_DEFAULT_VERSION="$(nvm_default_version)"
+else
+  step "Node" "nvm default ready ($NVM_DEFAULT_VERSION)"
+fi
+
+if [[ -n "$NVM_DEFAULT_VERSION" && "$NVM_DEFAULT_VERSION" != "N/A" && "$NVM_DEFAULT_VERSION" != "system" ]]; then
+  if (( DRY_RUN )); then
+    sub "would activate nvm default ($NVM_DEFAULT_VERSION)"
+  else
+    nvm use --silent default >/dev/null
+    sub "using $(node --version 2>/dev/null)"
+  fi
 fi
 
 # Rust toolchain (brew ships rustup-init only; nothing usable until it runs once)
@@ -203,7 +220,11 @@ fi
 
 # npm globals (must run before skills so Gemini CLI exists on fresh installs)
 step "npm globals"
-indent_run "$DOTFILES/scripts/install-npm-globals.sh"
+if (( DRY_RUN )); then
+  indent_run "$DOTFILES/scripts/install-npm-globals.sh" --dry-run
+else
+  indent_run "$DOTFILES/scripts/install-npm-globals.sh"
+fi
 
 # Skills (delegate)
 step "Skills" "via skills/install.sh"
