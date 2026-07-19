@@ -2,7 +2,7 @@
 
 btav macOS setup managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-It installs development tools and apps, then links configuration for zsh, Vim, Git, Ghostty, and Zed into the home directory.
+It installs development tools and apps, then links configuration for zsh, Vim, Git, Ghostty, Warp, and Zed into the home directory.
 
 The package lists are the sources of truth:
 
@@ -31,7 +31,7 @@ Use `./install.sh --dry-run` to preview the setup. The installer:
 ./update.sh
 ```
 
-The update script refreshes Homebrew metadata, installs or upgrades dependencies from `Brewfile`, updates the global npm packages (`pnpm` remains on major version 11), and updates installed Rust toolchains.
+The update script refreshes Homebrew metadata, installs or upgrades dependencies from `Brewfile`, backs up conflicting managed files, re-links the managed Stow packages so newly added config files are applied, updates the global npm packages (`pnpm` remains on major version 11), and updates installed Rust toolchains.
 
 It does not update git submodules, nvm, or installed Python versions. Update the skills submodule separately:
 

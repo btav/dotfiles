@@ -5,8 +5,6 @@ DRY_RUN=0
 [[ "${1:-}" == "--dry-run" ]] && DRY_RUN=1
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
-STOW_PKGS=(zsh vim zed ghostty git)
 GIT_DELTA_INCLUDE="~/.config/git/delta.gitconfig"
 
 step() { printf '\033[1;34m==>\033[0m %-13s %s\n' "$1" "${2:-}"; }
@@ -165,27 +163,12 @@ fi
 step "Submodules" "syncing"
 run git -C "$DOTFILES" submodule update --init --recursive --quiet
 
-# Backups (collect first, then report once)
-backed_up=()
-for target in "$HOME/.zshrc" "$HOME/.zshenv" "$HOME/.vimrc" "$HOME/.config/zed/settings.json" "$HOME/.config/ghostty/config" "$HOME/.config/git/delta.gitconfig"; do
-  if [[ -e "$target" && ! -L "$target" ]]; then
-    backed_up+=("$(tilde "$target")")
-    run mkdir -p "$BACKUP_DIR$(dirname "$target")"
-    run mv "$target" "$BACKUP_DIR$target"
-  fi
-done
-if (( ${#backed_up[@]} )); then
-  step "Backups" "→ $(tilde "$BACKUP_DIR")"
-  for f in "${backed_up[@]}"; do sub "$f"; done
+# Stow sync (backs up conflicting files, then restows all packages)
+if (( DRY_RUN )); then
+  "$DOTFILES/scripts/stow-sync.sh" --dry-run
 else
-  step "Backups" "nothing to back up"
+  "$DOTFILES/scripts/stow-sync.sh"
 fi
-
-# Stow
-step "Stow" "${STOW_PKGS[*]}"
-for pkg in "${STOW_PKGS[@]}"; do
-  run stow --no-folding --dir="$DOTFILES" --target="$HOME" --restow "$pkg"
-done
 
 # Local override stubs (seeded from .example; never overwrites existing files)
 step "Local stubs"

@@ -19,6 +19,9 @@ indent_run brew update
 step "brew bundle" "$(printf '%s' "$DOTFILES/Brewfile" | sed "s|^$HOME|~|")"
 indent_run brew bundle install --file="$DOTFILES/Brewfile"
 
+# Stow sync (backs up conflicting files, then restows all packages)
+"$DOTFILES/scripts/stow-sync.sh"
+
 step "npm globals"
 indent_run "$DOTFILES/scripts/install-npm-globals.sh"
 

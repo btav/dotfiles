@@ -18,6 +18,7 @@ brew "rustup"
 brew "uv"
 
 cask "ghostty"
+cask "warp"
 cask "zed"
 cask "claude-code"
 
