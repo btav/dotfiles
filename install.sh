@@ -201,7 +201,7 @@ else
   fi
 fi
 
-# npm globals (must run before skills so Gemini CLI exists on fresh installs)
+# npm globals
 step "npm globals"
 if (( DRY_RUN )); then
   indent_run "$DOTFILES/scripts/install-npm-globals.sh" --dry-run
