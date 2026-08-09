@@ -81,6 +81,11 @@ else
   fi
 fi
 
+# Homebrew requires explicitly trusting formulae from third-party taps.
+# Scope this trust to OpenCode rather than the entire anomalyco tap.
+step "brew trust" "anomalyco/tap/opencode"
+run brew trust --formula anomalyco/tap/opencode
+
 # Brewfile
 step "brew bundle" "$(tilde "$DOTFILES")/Brewfile"
 run brew bundle --file="$DOTFILES/Brewfile" --quiet

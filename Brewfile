@@ -17,6 +17,8 @@ brew "go"
 brew "rustup"
 brew "uv"
 
+brew "anomalyco/tap/opencode"
+
 cask "ghostty"
 cask "warp"
 cask "zed"
