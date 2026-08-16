@@ -19,7 +19,6 @@ brew "uv"
 
 brew "anomalyco/tap/opencode"
 
-cask "ghostty"
 cask "warp"
 cask "zed"
 cask "claude-code"
