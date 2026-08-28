@@ -89,7 +89,7 @@
     "dark": "Catppuccin Macchiato",
   },
   "edit_predictions": {
-    "provider": "ollama",
+    "provider": "copilot",
   },
   "terminal": {
     "toolbar": {
