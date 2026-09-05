@@ -45,5 +45,9 @@ export NODE_COMPILE_CACHE="$HOME/.cache/node-compile-cache"
 # Claude Code settings
 export CLAUDE_CODE_NO_FLICKER=1
 
+# Default terminal editor
+export EDITOR=nvim
+export VISUAL=nvim
+
 # Local overrides (machine-specific, not committed)
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
