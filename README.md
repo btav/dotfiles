@@ -2,7 +2,7 @@
 
 btav macOS setup managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-It installs development tools and apps, then links configuration for zsh, Vim, Git, Warp, and Zed into the home directory.
+It installs development tools and apps, then links configuration for zsh, Vim, Git, Ghostty, Warp, and Zed into the home directory.
 
 The package lists are the sources of truth:
 

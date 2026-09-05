@@ -21,6 +21,7 @@ brew "anomalyco/tap/opencode"
 
 brew "herdr"
 
+cask "ghostty"
 cask "warp"
 cask "zed"
 cask "claude-code"

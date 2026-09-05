@@ -6,7 +6,7 @@ DRY_RUN=0
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
-STOW_PKGS=(zsh vim zed warp git)
+STOW_PKGS=(zsh vim zed ghostty warp git)
 
 step() { printf '\033[1;34m==>\033[0m %-13s %s\n' "$1" "${2:-}"; }
 sub()  { printf '    %s\n' "$*"; }
