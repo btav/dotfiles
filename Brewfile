@@ -19,6 +19,8 @@ brew "uv"
 
 brew "anomalyco/tap/opencode"
 
+brew "herdr"
+
 cask "warp"
 cask "zed"
 cask "claude-code"
