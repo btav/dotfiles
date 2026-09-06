@@ -43,6 +43,7 @@ alias cp='cp -i'
 alias zshrc='${EDITOR:-vim} ~/.zshrc'
 
 # Misc
+alias h='herdr'
 alias ports='lsof -iTCP -sTCP:LISTEN -n -P'
 alias ip='curl -s ifconfig.me'
 
