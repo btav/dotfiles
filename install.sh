@@ -90,6 +90,13 @@ run brew trust --formula anomalyco/tap/opencode
 step "brew bundle" "$(tilde "$DOTFILES")/Brewfile"
 run brew bundle --file="$DOTFILES/Brewfile" --quiet
 
+# Rectangle registers its login item when the app starts.
+if (( DRY_RUN )); then
+  bash "$DOTFILES/scripts/setup-rectangle.sh" --dry-run
+else
+  bash "$DOTFILES/scripts/setup-rectangle.sh"
+fi
+
 # nvm (official installer; ~/.nvm). PROFILE=/dev/null prevents it from
 # editing ~/.zshrc — our stowed .zshrc already sources nvm.
 NVM_VERSION="v0.40.4"

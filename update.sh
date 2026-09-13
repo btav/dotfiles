@@ -19,6 +19,8 @@ indent_run brew update
 step "brew bundle" "$(printf '%s' "$DOTFILES/Brewfile" | sed "s|^$HOME|~|")"
 indent_run brew bundle install --file="$DOTFILES/Brewfile"
 
+bash "$DOTFILES/scripts/setup-rectangle.sh"
+
 # Stow sync (backs up conflicting files, then restows all packages)
 "$DOTFILES/scripts/stow-sync.sh"
 

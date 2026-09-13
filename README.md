@@ -21,6 +21,7 @@ cd dotfiles
 Use `./install.sh --dry-run` to preview the setup. The installer:
 
 - installs Homebrew and the dependencies in `Brewfile`
+- on macOS, installs [Rectangle](https://rectangleapp.com/) and enables it to launch at login
 - installs nvm, a stable Rust toolchain, and Python 3.13 through uv
 - syncs submodules and installs global npm packages and shared skills
 - backs up conflicting config files before stowing this repository's config
