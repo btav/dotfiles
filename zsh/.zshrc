@@ -40,6 +40,7 @@ alias mv='mv -i'
 alias cp='cp -i'
 
 # Quick edits
+alias e='zed .'
 alias zshrc='${EDITOR:-vim} ~/.zshrc'
 
 # Misc
