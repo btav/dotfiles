@@ -2,7 +2,7 @@
 
 btav macOS setup managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-It installs development tools and apps, then links configuration for zsh, Vim, Neovim (LazyVim), Git, Ghostty, and Zed into the home directory.
+It installs development tools and apps, then links configuration for zsh, Vim, Git, Ghostty, and Zed into the home directory.
 
 The package lists are the sources of truth:
 
@@ -55,14 +55,8 @@ After adding files to a Stow package, re-link it from the repository root:
 stow --no-folding --restow zsh
 ```
 
-## Neovim / LazyVim
+## Editors
 
-After install or update, launch `nvim` and let LazyVim download its plugins, then run `:LazyHealth`.
+`EDITOR` and `VISUAL` default to `vim`; override them in `~/.zshenv.local`.
 
-`EDITOR` and `VISUAL` default to `nvim`; override them in `~/.zshenv.local`.
-
-Edit settings in `nvim/.config/nvim/lua/config/` and plugins in `lua/plugins/`. Use `:LazyExtras` for optional features.
-
-Run `:Lazy update` to upgrade plugins; `./update.sh` doesn't update them. Commit `lazy-lock.json` and `lazyvim.json` changes, and use `:Lazy restore` after pulling a changed lockfile.
-
-The first setup backs up existing Neovim config and data to `~/.dotfiles-backup-<timestamp>`.
+Use `e` to open the current directory in Zed (`zed .`).

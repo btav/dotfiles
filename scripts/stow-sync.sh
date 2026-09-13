@@ -51,19 +51,6 @@ backup_target() {
   fi
 }
 
-# Neovim owns its entire config directory: old Lua files must not survive a
-# fresh starter migration. Moving a foreign symlink preserves its destination.
-if [[ -L "$HOME/.config" || ( -e "$HOME/.config" && ! -d "$HOME/.config" ) ]]; then
-  printf 'error: ~/.config must be a real directory before linking Neovim\n' >&2
-  exit 1
-fi
-if [[ ! -L "$HOME/.config/nvim" || ! "$HOME/.config/nvim" -ef "$DOTFILES/nvim/.config/nvim" ]]; then
-  backup_target "$HOME/.config/nvim"
-  backup_target "$HOME/.local/share/nvim"
-  backup_target "$HOME/.local/state/nvim"
-  backup_target "$HOME/.cache/nvim"
-fi
-
 for pkg in "${STOW_PKGS[@]}"; do
   while IFS= read -r source; do
     rel="${source#"$DOTFILES/$pkg/"}"
@@ -80,13 +67,14 @@ else
   step "Backups" "nothing to back up"
 fi
 
+# The nvim package was removed; drop the dangling ~/.config/nvim link its old
+# directory-folding stow left behind.
+if [[ -L "$HOME/.config/nvim" && ! -e "$HOME/.config/nvim" ]]; then
+  run rm "$HOME/.config/nvim"
+fi
+
 # Stow
 step "Stow" "${STOW_PKGS[*]}"
 for pkg in "${STOW_PKGS[@]}"; do
   indent_run stow --no-folding --dir="$DOTFILES" --target="$HOME" --restow "$pkg"
 done
-
-# Fold only nvim, never ~/.config. Generated config stays in the repository.
-step "Stow" "nvim (directory link)"
-run mkdir -p "$HOME/.config"
-indent_run stow --dir="$DOTFILES" --target="$HOME" --restow nvim

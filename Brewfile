@@ -1,7 +1,4 @@
 brew "stow"
-brew "neovim"
-brew "tree-sitter"
-brew "lazygit"
 brew "gh"
 brew "jq"
 brew "ripgrep"
