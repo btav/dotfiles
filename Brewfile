@@ -23,7 +23,6 @@ brew "herdr"
 
 cask "ghostty"
 cask "zed"
-cask "claude-code"
 cask "rectangle" if OS.mac?
 
 cask "font-jetbrains-mono-nerd-font"
