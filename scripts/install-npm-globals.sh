@@ -62,6 +62,7 @@ TARGET_PREFIX="$(cd "$(dirname "$NPM_BIN")/.." && pwd -P)"
 PACKAGES=(
   "@openai/codex@latest"
   "@anthropic-ai/claude-code@latest"
+  "opencode-ai@latest"
   "pnpm@11"
   "@earendil-works/pi-coding-agent@latest"
 )
@@ -73,4 +74,39 @@ echo "    prefix: $TARGET_PREFIX"
 for pkg in "${PACKAGES[@]}"; do
   echo "    npm i -g $pkg"
   run "$NPM_BIN" --prefix "$TARGET_PREFIX" install -g "$pkg"
+done
+
+# Launchers pin these tools to the nvm default Node. The shell keeps this
+# folder ahead of nvm's bin (see promote_ai_tools in .zshenv and .zshrc).
+LAUNCHER_DIR="$HOME/.local/share/ai-tools/bin"
+LAUNCHED_TOOLS=(claude codex opencode pi)
+
+echo "==> launchers in $LAUNCHER_DIR"
+run mkdir -p "$LAUNCHER_DIR"
+
+for tool in "${LAUNCHED_TOOLS[@]}"; do
+  target="$TARGET_PREFIX/bin/$tool"
+  if (( ! DRY_RUN )) && [[ ! -e "$target" ]]; then
+    echo "$tool not found at $target" >&2
+    exit 1
+  fi
+
+  # Run node scripts with the default Node explicitly; `#!/usr/bin/env node`
+  # would pick up whatever Node the current project uses. PATH stays
+  # untouched so commands these tools run still see the project's Node.
+  if [[ -e "$target" ]] && head -n 1 "$target" | grep -q '^#!.*node'; then
+    cmd="exec $(printf '%q' "$NODE_BIN") $(printf '%q' "$target") \"\$@\""
+  else
+    cmd="exec $(printf '%q' "$target") \"\$@\""
+  fi
+
+  launcher="$LAUNCHER_DIR/$tool"
+  echo "    $tool -> $target"
+  if (( DRY_RUN )); then
+    echo "DRY: write $launcher: $cmd"
+  else
+    printf '#!/bin/sh\n%s\n' "$cmd" > "$launcher.tmp"
+    chmod +x "$launcher.tmp"
+    mv "$launcher.tmp" "$launcher"
+  fi
 done

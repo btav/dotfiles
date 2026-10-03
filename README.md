@@ -34,6 +34,8 @@ Use `./install.sh --dry-run` to preview the setup. The installer:
 
 The update script refreshes Homebrew metadata, installs or upgrades dependencies from `Brewfile`, backs up conflicting managed files, re-links the managed Stow packages so newly added config files are applied, updates the global npm packages (`pnpm` remains on major version 11), and updates installed Rust toolchains.
 
+The npm packages install under your default nvm Node. Codex, Claude Code, OpenCode, and Pi run through launchers in `~/.local/share/ai-tools/bin`, so they stay on that Node after `nvm use`; pnpm follows the active Node. The launchers point at a specific Node version, so run `./update.sh` again after you change the nvm default.
+
 It does not update git submodules, nvm, or installed Python versions. Update the skills submodule separately:
 
 ```sh

@@ -59,6 +59,10 @@ command -v bat >/dev/null && alias cat='bat --paging=never --style=plain'
 # Node Version Manager — slow source, interactive only ($NVM_DIR set in .zshenv)
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# nvm puts its bin first on load and on every `nvm use`; move the ai-tools
+# launchers (.zshenv) back in front before each prompt.
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd promote_ai_tools
 
 # Bun completions ($BUN_INSTALL set in .zshenv)
 [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"

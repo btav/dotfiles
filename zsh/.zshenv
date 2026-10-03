@@ -38,6 +38,17 @@ path_prepend_once "$HOME/go/bin"
 # Personal bin (also where `uv tool install` shims land)
 path_prepend_once "$HOME/.local/bin"
 
+# Launchers for claude, codex, opencode and pi (written by install-npm-globals.sh).
+# Kept first so they win over other installed copies; .zshrc re-runs this
+# after `nvm use`.
+promote_ai_tools() {
+  local dir="$HOME/.local/share/ai-tools/bin"
+  [[ -d "$dir" ]] || return
+  path=("$dir" "${(@)path:#$dir}")
+  export PATH
+}
+promote_ai_tools
+
 # Node V8 compile cache — stores bytecode so repeated `node` invocations
 # (eslint, prettier, tsc, scripts) skip parse+compile on cold start.
 export NODE_COMPILE_CACHE="$HOME/.cache/node-compile-cache"
