@@ -14,3 +14,14 @@
 
 [alias]
   ds = -c delta.side-by-side=true diff
+
+[push]
+  autoSetupRemote = true
+[fetch]
+  prune = true
+[pull]
+  rebase = true
+[rebase]
+  autosquash = true
+[rerere]
+  enabled = true

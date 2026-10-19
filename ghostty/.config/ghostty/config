@@ -19,6 +19,7 @@ font-family = JetBrainsMono Nerd Font
 
 macos-titlebar-style = transparent
 macos-titlebar-proxy-icon = hidden
+macos-option-as-alt = true
 
 cursor-opacity = 1.0
 cursor-style = block

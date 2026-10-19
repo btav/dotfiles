@@ -11,7 +11,7 @@ source $ZSH/oh-my-zsh.sh
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE="$HOME/.zsh_history"
-setopt SHARE_HISTORY HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS INC_APPEND_HISTORY
+setopt SHARE_HISTORY HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS INC_APPEND_HISTORY HIST_VERIFY HIST_EXPIRE_DUPS_FIRST
 
 # Aliases
 alias amend="git commit --amend --no-edit"
@@ -24,7 +24,7 @@ alias gl='git log --oneline -20'
 alias gco='git checkout'
 alias gcb='git checkout -b'
 alias gp='git push'
-alias gpu='git pull'
+alias gpl='git pull'
 alias grb='git rebase -i'
 alias stash='git stash'
 alias pop='git stash pop'

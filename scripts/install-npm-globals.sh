@@ -62,7 +62,7 @@ TARGET_PREFIX="$(cd "$(dirname "$NPM_BIN")/.." && pwd -P)"
 PACKAGES=(
   "@openai/codex@latest"
   "@anthropic-ai/claude-code@latest"
-  "opencode-ai@latest"
+  "@opencode/cli@latest"
   "pnpm@11"
   "@earendil-works/pi-coding-agent@latest"
 )

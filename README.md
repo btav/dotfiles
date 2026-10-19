@@ -21,7 +21,6 @@ cd dotfiles
 Use `./install.sh --dry-run` to preview the setup. The installer:
 
 - installs Homebrew and the dependencies in `Brewfile`
-- on macOS, installs [Rectangle](https://rectangleapp.com/) and enables it to launch at login
 - installs nvm, a stable Rust toolchain, and Python 3.13 through uv
 - syncs submodules and installs global npm packages and shared skills
 - backs up conflicting config files before stowing this repository's config
@@ -36,11 +35,13 @@ The update script refreshes Homebrew metadata, installs or upgrades dependencies
 
 The npm packages install under your default nvm Node. Codex, Claude Code, OpenCode, and Pi run through launchers in `~/.local/share/ai-tools/bin`, so they stay on that Node after `nvm use`; pnpm follows the active Node. The launchers point at a specific Node version, so run `./update.sh` again after you change the nvm default.
 
-It does not update git submodules, nvm, or installed Python versions. Update the skills submodule separately:
+It does not update nvm or installed Python versions. Pass `--skills` to also update the skills submodule to its latest:
 
 ```sh
-git submodule update --remote skills
+./update.sh --skills
 ```
+
+The submodule bump then shows as a pending change in this repository, ready to commit.
 
 ## Customize
 
@@ -56,6 +57,12 @@ After adding files to a Stow package, re-link it from the repository root:
 ```sh
 stow --no-folding --restow zsh
 ```
+
+## What lives where
+
+- `~/.local/share/ai-tools/bin` — launchers pinning AI tools to the default nvm Node (written by `scripts/install-npm-globals.sh`)
+- `~/.dotfiles-backup-<timestamp>` — conflicting config backups made by stow-sync; they accumulate and are never cleaned automatically
+- `~/.zshenv.local` / `~/.zshrc.local` — machine-specific overrides, never overwritten
 
 ## Editors
 

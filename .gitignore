@@ -1,6 +1,4 @@
-# Local-only zsh additions (sourced if present)
-zsh/.zshrc.local
-zsh/.zshenv.local
+# Local-only additions (sourced if present)
 **/*.local
 
 # Anything claude-private (defensive — claude package isn't stowed by default)
