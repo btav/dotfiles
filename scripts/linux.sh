@@ -3,7 +3,7 @@ set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GIT_DELTA_INCLUDE="~/.config/git/delta.gitconfig"
-PACKAGES=(stow git-delta vim zed ttf-jetbrains-mono-nerd zsh zsh-autosuggestions zsh-syntax-highlighting lsof)
+PACKAGES=(stow git-delta vim zed zsh zsh-autosuggestions zsh-syntax-highlighting lsof)
 
 DRY_RUN=0
 action="${1:-}"
@@ -36,8 +36,8 @@ run() {
 step "Linux packages"
 run omarchy pkg add "${PACKAGES[@]}"
 
-step "pnpm 11 via mise"
-run mise use --global --fuzzy pnpm@11
+step "pnpm 12 via mise"
+run mise use --global --fuzzy pnpm@12
 
 if [[ ! -e "$HOME/.oh-my-zsh" && ! -L "$HOME/.oh-my-zsh" ]]; then
   step "Oh My Zsh"

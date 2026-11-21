@@ -71,7 +71,8 @@ stow_linux_package() {
     fi
   done < <(find "$DOTFILES/$pkg" -type f -print0)
 
-  indent_run stow --no-folding --dir="$DOTFILES" --target="$HOME" --restow "${ignores[@]}" "$pkg"
+  # Stow's unstow phase can remove dangling links even when they are ignored.
+  indent_run stow --no-folding --dir="$DOTFILES" --target="$HOME" --stow "${ignores[@]}" "$pkg"
 }
 
 if (( LINUX )); then
