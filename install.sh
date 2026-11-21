@@ -5,6 +5,10 @@ DRY_RUN=0
 [[ "${1:-}" == "--dry-run" ]] && DRY_RUN=1
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ "$(uname -s)" == Linux ]]; then
+  exec bash "$DOTFILES/scripts/omarchy.sh" install "$@"
+fi
+
 GIT_DELTA_INCLUDE="~/.config/git/delta.gitconfig"
 
 step() { printf '\033[1;34m==>\033[0m %-13s %s\n' "$1" "${2:-}"; }
