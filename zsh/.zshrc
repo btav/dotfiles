@@ -5,7 +5,7 @@
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="awesomepanda"
 plugins=(git)
-source $ZSH/oh-my-zsh.sh
+[[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
 
 # History
 HISTSIZE=100000
@@ -40,7 +40,11 @@ alias mv='mv -i'
 alias cp='cp -i'
 
 # Quick edits
-alias e='zed .'
+if ! command -v zed >/dev/null && command -v zeditor >/dev/null; then
+  alias e='zeditor .'
+else
+  alias e='zed .'
+fi
 alias zshrc='${EDITOR:-vim} ~/.zshrc'
 
 # Misc
@@ -56,13 +60,27 @@ command -v eza >/dev/null && {
 }
 command -v bat >/dev/null && alias cat='bat --paging=never --style=plain'
 
-# Node Version Manager — slow source, interactive only ($NVM_DIR set in .zshenv)
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-# nvm puts its bin first on load and on every `nvm use`; move the ai-tools
-# launchers (.zshenv) back in front before each prompt.
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd promote_ai_tools
+dotfiles_zsh_plugin_dir=""
+if [[ $OSTYPE == linux* ]] && (( $+commands[omarchy] )); then
+  if command -v mise >/dev/null; then
+    eval "$(mise activate zsh)"
+  fi
+  dotfiles_zsh_plugin_dir=/usr/share/zsh/plugins
+else
+  # nvm puts its bin first on load and on every `nvm use`.
+  if [[ -n "${NVM_DIR:-}" ]]; then
+    [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+    [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+  fi
+  if (( $+functions[promote_ai_tools] )); then
+    autoload -Uz add-zsh-hook
+    add-zsh-hook precmd promote_ai_tools
+  fi
+  if command -v brew >/dev/null; then
+    brew_prefix="$(brew --prefix)"
+    dotfiles_zsh_plugin_dir="$brew_prefix/share"
+  fi
+fi
 
 # Bun completions ($BUN_INSTALL set in .zshenv)
 [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
@@ -74,17 +92,15 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 command -v fzf >/dev/null && source <(fzf --zsh)
 
 # zsh-autosuggestions — gray ghost text from history; right-arrow to accept
-if command -v brew >/dev/null; then
-  brew_prefix="$(brew --prefix)"
-  [[ -f "$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
-    source "$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+if [[ -n "$dotfiles_zsh_plugin_dir" && -r "$dotfiles_zsh_plugin_dir/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+  source "$dotfiles_zsh_plugin_dir/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fi
 
 # Local overrides (machine-specific, not committed)
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # zsh-syntax-highlighting — colors invalid commands red. MUST be sourced last.
-if [[ -n "${brew_prefix:-}" ]]; then
-  [[ -f "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
-    source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+if [[ -n "$dotfiles_zsh_plugin_dir" && -r "$dotfiles_zsh_plugin_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+  source "$dotfiles_zsh_plugin_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
+unset dotfiles_zsh_plugin_dir

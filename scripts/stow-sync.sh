@@ -2,18 +2,19 @@
 set -euo pipefail
 
 DRY_RUN=0
-[[ "${1:-}" == "--dry-run" ]] && DRY_RUN=1
+LINUX=0
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run) DRY_RUN=1 ;;
+    --linux) LINUX=1 ;;
+    *)
+      printf 'Usage: %s [--dry-run] [--linux]\n' "$0" >&2
+      exit 2
+      ;;
+  esac
+done
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
-# Multiple syncs in the same second must never reuse a previous backup.
-backup_base="$BACKUP_DIR"
-backup_suffix=0
-while [[ -e "$BACKUP_DIR" || -L "$BACKUP_DIR" ]]; do
-  backup_suffix=$((backup_suffix + 1))
-  BACKUP_DIR="$backup_base-$backup_suffix"
-done
-STOW_PKGS=(zsh vim zed ghostty git)
 
 step() { printf '\033[1;34m==>\033[0m %-13s %s\n' "$1" "${2:-}"; }
 sub()  { printf '    %s\n' "$*"; }
@@ -39,6 +40,59 @@ indent_run() {
     "$@" 2>&1 | sed 's/^/    /'
   fi
 }
+
+stow_linux_package() {
+  local pkg="$1"
+  local source target parent conflict escaped
+  local ignores=(--ignore='\.example')
+
+  while IFS= read -r -d '' source; do
+    [[ "$source" == *.example ]] && continue
+    target="$HOME/${source#"$DOTFILES/$pkg/"}"
+    conflict=
+    [[ -e "$target" || -L "$target" ]] && conflict="$target"
+
+    # Preserve symlinked directories and non-directories in the target path.
+    parent="${target%/*}"
+    while [[ "$parent" != "$HOME" ]]; do
+      if [[ -L "$parent" || ( -e "$parent" && ! -d "$parent" ) ]]; then
+        conflict="$parent"
+      fi
+      parent="${parent%/*}"
+    done
+
+    if [[ -n "$conflict" ]]; then
+      # Leave working links to the package in place without reporting a conflict.
+      if [[ "$conflict" != "$target" || ! -L "$target" || ! "$target" -ef "$source" ]]; then
+        sub "skipping $(tilde "$target") (existing $(tilde "$conflict"))"
+      fi
+      escaped="$(printf '%s' "${conflict#"$HOME/"}" | sed 's/[][\\.^$*+?(){}|]/\\&/g')"
+      ignores+=("--ignore=^$escaped")
+    fi
+  done < <(find "$DOTFILES/$pkg" -type f -print0)
+
+  # Stow's unstow phase can remove dangling links even when they are ignored.
+  indent_run stow --no-folding --dir="$DOTFILES" --target="$HOME" --stow "${ignores[@]}" "$pkg"
+}
+
+if (( LINUX )); then
+  STOW_PKGS=(zsh vim zed git)
+  step "Stow" "${STOW_PKGS[*]}"
+  for pkg in "${STOW_PKGS[@]}"; do
+    stow_linux_package "$pkg"
+  done
+  exit 0
+fi
+
+STOW_PKGS=(zsh vim zed ghostty git)
+BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
+# Multiple syncs in the same second must never reuse a previous backup.
+backup_base="$BACKUP_DIR"
+backup_suffix=0
+while [[ -e "$BACKUP_DIR" || -L "$BACKUP_DIR" ]]; do
+  backup_suffix=$((backup_suffix + 1))
+  BACKUP_DIR="$backup_base-$backup_suffix"
+done
 
 # Backups (collect first, then report once)
 backed_up=()

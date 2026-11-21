@@ -3,10 +3,12 @@
 # Interactive-only stuff goes in .zshrc.
 
 # Homebrew (must be first — downstream PATH entries depend on brew-installed binaries)
-if [[ -x /opt/homebrew/bin/brew ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -x /usr/local/bin/brew ]]; then
-  eval "$(/usr/local/bin/brew shellenv)"
+if [[ $OSTYPE == darwin* ]]; then
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
 fi
 
 path_prepend_once() {
@@ -18,11 +20,15 @@ path_prepend_once() {
   esac
 }
 
-# Node Version Manager — variable only; the slow `source nvm.sh` lives in .zshrc
-export NVM_DIR="$HOME/.nvm"
-
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
+dotfiles_use_mise=0
+if [[ $OSTYPE == linux* ]] && (( $+commands[omarchy] )); then
+  dotfiles_use_mise=1
+  export PNPM_HOME="${PNPM_HOME:-${XDG_DATA_HOME:-$HOME/.local/share}/pnpm}"
+else
+  # The slow `source nvm.sh` lives in .zshrc.
+  export NVM_DIR="$HOME/.nvm"
+  export PNPM_HOME="$HOME/Library/pnpm"
+fi
 path_prepend_once "$PNPM_HOME/bin"
 
 # Bun
@@ -36,18 +42,29 @@ path_prepend_once "$HOME/.cargo/bin"
 path_prepend_once "$HOME/go/bin"
 
 # Personal bin (also where `uv tool install` shims land)
-path_prepend_once "$HOME/.local/bin"
+if (( dotfiles_use_mise )); then
+  # Keep mise shims and wrappers ahead of local executables.
+  case ":$PATH:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$PATH:$HOME/.local/bin" ;;
+  esac
+else
+  path_prepend_once "$HOME/.local/bin"
+fi
 
 # Launchers for claude, codex, opencode and pi (written by install-npm-globals.sh).
 # Kept first so they win over other installed copies; .zshrc re-runs this
 # after `nvm use`.
-promote_ai_tools() {
-  local dir="$HOME/.local/share/ai-tools/bin"
-  [[ -d "$dir" ]] || return
-  path=("$dir" "${(@)path:#$dir}")
-  export PATH
-}
-promote_ai_tools
+if (( ! dotfiles_use_mise )); then
+  promote_ai_tools() {
+    local dir="$HOME/.local/share/ai-tools/bin"
+    [[ -d "$dir" ]] || return
+    path=("$dir" "${(@)path:#$dir}")
+    export PATH
+  }
+  promote_ai_tools
+fi
+unset dotfiles_use_mise
 
 # Node V8 compile cache — stores bytecode so repeated `node` invocations
 # (eslint, prettier, tsc, scripts) skip parse+compile on cold start.

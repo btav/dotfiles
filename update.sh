@@ -2,6 +2,9 @@
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ "$(uname -s)" == Linux ]]; then
+  exec bash "$DOTFILES/scripts/linux.sh" update "$@"
+fi
 
 UPDATE_SKILLS=0
 case "${1:-}" in
