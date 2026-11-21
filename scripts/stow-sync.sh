@@ -2,13 +2,13 @@
 set -euo pipefail
 
 DRY_RUN=0
-OMARCHY=0
+LINUX=0
 for arg in "$@"; do
   case "$arg" in
     --dry-run) DRY_RUN=1 ;;
-    --omarchy) OMARCHY=1 ;;
+    --linux) LINUX=1 ;;
     *)
-      printf 'Usage: %s [--dry-run] [--omarchy]\n' "$0" >&2
+      printf 'Usage: %s [--dry-run] [--linux]\n' "$0" >&2
       exit 2
       ;;
   esac
@@ -41,7 +41,7 @@ indent_run() {
   fi
 }
 
-stow_omarchy_package() {
+stow_linux_package() {
   local pkg="$1"
   local source target parent conflict escaped
   local ignores=(--ignore='\.example')
@@ -74,11 +74,11 @@ stow_omarchy_package() {
   indent_run stow --no-folding --dir="$DOTFILES" --target="$HOME" --restow "${ignores[@]}" "$pkg"
 }
 
-if (( OMARCHY )); then
+if (( LINUX )); then
   STOW_PKGS=(zsh vim zed git)
   step "Stow" "${STOW_PKGS[*]}"
   for pkg in "${STOW_PKGS[@]}"; do
-    stow_omarchy_package "$pkg"
+    stow_linux_package "$pkg"
   done
   exit 0
 fi

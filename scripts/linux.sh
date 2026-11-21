@@ -33,7 +33,7 @@ run() {
   fi
 }
 
-step "Omarchy packages"
+step "Linux packages"
 run omarchy pkg add "${PACKAGES[@]}"
 
 step "pnpm 11 via mise"
@@ -44,7 +44,7 @@ if [[ ! -e "$HOME/.oh-my-zsh" && ! -L "$HOME/.oh-my-zsh" ]]; then
   run git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
 fi
 
-stow_flags=(--omarchy)
+stow_flags=(--linux)
 (( DRY_RUN )) && stow_flags+=(--dry-run)
 "$DOTFILES/scripts/stow-sync.sh" "${stow_flags[@]}"
 

@@ -20,9 +20,9 @@ path_prepend_once() {
   esac
 }
 
-dotfiles_omarchy=0
+dotfiles_use_mise=0
 if [[ $OSTYPE == linux* ]] && (( $+commands[omarchy] )); then
-  dotfiles_omarchy=1
+  dotfiles_use_mise=1
   export PNPM_HOME="${PNPM_HOME:-${XDG_DATA_HOME:-$HOME/.local/share}/pnpm}"
 else
   # The slow `source nvm.sh` lives in .zshrc.
@@ -42,8 +42,8 @@ path_prepend_once "$HOME/.cargo/bin"
 path_prepend_once "$HOME/go/bin"
 
 # Personal bin (also where `uv tool install` shims land)
-if (( dotfiles_omarchy )); then
-  # Keep Omarchy's mise shims and wrappers ahead of local executables.
+if (( dotfiles_use_mise )); then
+  # Keep mise shims and wrappers ahead of local executables.
   case ":$PATH:" in
     *":$HOME/.local/bin:"*) ;;
     *) export PATH="$PATH:$HOME/.local/bin" ;;
@@ -55,7 +55,7 @@ fi
 # Launchers for claude, codex, opencode and pi (written by install-npm-globals.sh).
 # Kept first so they win over other installed copies; .zshrc re-runs this
 # after `nvm use`.
-if (( ! dotfiles_omarchy )); then
+if (( ! dotfiles_use_mise )); then
   promote_ai_tools() {
     local dir="$HOME/.local/share/ai-tools/bin"
     [[ -d "$dir" ]] || return
@@ -64,7 +64,7 @@ if (( ! dotfiles_omarchy )); then
   }
   promote_ai_tools
 fi
-unset dotfiles_omarchy
+unset dotfiles_use_mise
 
 # Node V8 compile cache — stores bytecode so repeated `node` invocations
 # (eslint, prettier, tsc, scripts) skip parse+compile on cold start.

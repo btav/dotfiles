@@ -6,7 +6,7 @@ DRY_RUN=0
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [[ "$(uname -s)" == Linux ]]; then
-  exec bash "$DOTFILES/scripts/omarchy.sh" install "$@"
+  exec bash "$DOTFILES/scripts/linux.sh" install "$@"
 fi
 
 GIT_DELTA_INCLUDE="~/.config/git/delta.gitconfig"
